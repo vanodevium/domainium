@@ -1,0 +1,32 @@
+services:
+
+  domainium:
+    env_file: .env
+    container_name: domainium
+    build: .
+    restart: unless-stopped
+    user: "1000:1000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    networks:
+      - domainium
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.cron.schedule: "${CRON:-0 0 12 * * *}"
+      ofelia.job-exec.cron.command: "node cron.mjs"
+
+  cron:
+    container_name: cron
+    image: "mcuadros/ofelia"
+    restart: unless-stopped
+    command: "daemon --docker -f network=domainium"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - domainium
+
+networks:
+  domainium:
+    name: "domainium"
+    driver: bridge

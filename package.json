@@ -1,0 +1,26 @@
+{
+  "name": "@devium/domainium",
+  "version": "0.0.1",
+  "description": "DNS and SSL expiration service",
+  "license": "MIT",
+  "author": {
+    "name": "Vano Devium",
+    "email": "vano@devium.me",
+    "url": "https://devium.me/"
+  },
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "fix": "prettier -w functions lib cron.js server.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "1.13.7",
+    "dayjs": "1.11.13",
+    "dotenv": "16.4.5",
+    "hono": "4.6.10",
+    "node-rdap": "0.4.1",
+    "normalize-url": "8.0.1",
+    "psl": "1.10.0",
+    "ssl-checker": "2.0.10"
+  }
+}
