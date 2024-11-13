@@ -1,0 +1,18 @@
+import psl from "psl";
+import load from "./load.mjs";
+import restore from "./restore.mjs";
+import normalize from "./normalize.mjs";
+
+const add = (path, domain) => {
+  const parsed = psl.parse(normalize(domain));
+  if (parsed.error || !parsed.domain) {
+    throw Error(parsed.error?.message || `Unrecognized domain: ${domain}`);
+  }
+  const domains = load(path);
+  return !!restore(
+    path,
+    JSON.stringify(Array.from(new Set(domains).add(parsed.input))),
+  );
+};
+
+export default add;
